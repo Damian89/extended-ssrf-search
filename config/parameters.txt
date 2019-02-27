@@ -1,7 +1,12 @@
 token
 url
 redirect
-redirectUrl
+redirecturl
 host
 parse
 file
+u
+f
+data
+query
+path
