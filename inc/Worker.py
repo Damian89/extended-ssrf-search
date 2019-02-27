@@ -46,7 +46,7 @@ class Worker(threading.Thread):
 
                 state = self.__make_color_state(response)
 
-                print("{} [Proc: {}] Request to {} [{}] [{}]".format(
+                print("{} [Proc: {}] {} [{}] [{}]".format(
                     state,
                     self.tid,
                     data["url"],
@@ -55,7 +55,7 @@ class Worker(threading.Thread):
                 ))
 
             except Exception as e:
-                print("{} [Proc: {}] [URL: {}] [{}] Error: {}".format(
+                print("{} [Proc: {}] {} [{}] [{}]".format(
                     Color.red("[ x ]"),
                     self.tid,
                     data["url"],
