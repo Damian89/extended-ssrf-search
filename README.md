@@ -188,14 +188,16 @@ __Position__
 
 Valid options are "append" and "prepend"!
 
-If "append" is chosen, the payload looks like this:
+If "append" is chosen, the payloads look like this:
 
+```
 ....burpcollaborator.net/www.attacked-domain.com-testmethod
-
 http://....burpcollaborator.net/www.attacked-domain.com-testmethod
+```
 
-If "prepend" is chosen, the payload looks like this:
+If "prepend" is chosen, the payloads look like this:
 
+```
 www.attacked-domain.com-testmethod.burpcollaborator.net
-
 http://www.attacked-domain.com-testmethod.burpcollaborator.net/
+```
