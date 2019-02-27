@@ -15,7 +15,7 @@ which have the highest possibility to be vulnerable. If you don't think so: just
 
 This tool does not expect any argument via CLI, so just type:
 ```
-python 3 extended-ssrf-search.py
+python3 extended-ssrf-search.py
 ```
 
 ## Configuration
