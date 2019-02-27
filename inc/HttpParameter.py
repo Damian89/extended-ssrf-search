@@ -22,6 +22,7 @@ import json
 class HttpParameter:
 
     def __init__(self, config, oldquery, callback):
+
         self.config = config
         self.oldquery = oldquery
         self.params = []
@@ -39,9 +40,11 @@ class HttpParameter:
         return "&".join(query)
 
     def combine_for_post(self):
+
         return self.combine_for_get()
 
     def combine_as_json(self):
+
         jsonA = {}
 
         for data in self.finale_query_parts:
@@ -50,6 +53,7 @@ class HttpParameter:
         return json.dumps(jsonA, ensure_ascii=True)
 
     def __make_combinations(self, callback):
+
         for param in self.params:
             self.finale_query_parts.append({
                 'param': param,
@@ -57,13 +61,20 @@ class HttpParameter:
             })
 
     def __extract_params_from_query(self):
+
         old_params_exploded = []
+
         if self.oldquery.strip() != "":
             old_params_exploded = self.oldquery.split("&")
+
         if len(old_params_exploded) > 0:
+
             for param_val in old_params_exploded:
                 param_name, param_val = param_val.split("=")
+
                 self.params.append(param_name)
+
         additional_params = self.config.parameters.splitlines()
+
         for add_param in additional_params:
             self.params.append(add_param)

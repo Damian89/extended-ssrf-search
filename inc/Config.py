@@ -19,11 +19,13 @@
 import configparser
 import os
 import sys
+from inc.Color import *
 
 
 class Config:
 
     def __init__(self):
+
         self.config = configparser.ConfigParser()
         self.config.read('app-settings.conf')
 
@@ -121,6 +123,7 @@ class Config:
         self.static_headers = static_headers
 
     def __get_urls(self):
+        
         file = self.config["files"]["Urls"]
 
         if not os.path.exists(file):
@@ -136,13 +139,15 @@ class Config:
         self.urls = urls.splitlines()
 
     def show_summary(self):
+
         if self.identifier_position == "prepend":
-            print("\033[33m[ i ]\033[0m Callback:\t\t\t%host%.{}".format(self.callback))
+            print("{} Callback:\t\t\t%host%.{}".format(Color.orange("[ i ]"), self.callback))
         else:
-            print("\033[33m[ i ]\033[0m Callback:\t\t\t{}/%host%".format(self.callback))
-        print("\033[33m[ i ]\033[0m HTTP Method:\t\t{}".format(self.http_method))
-        print("\033[33m[ i ]\033[0m Threads:\t\t\t{}".format(self.max_threads))
-        print("\033[33m[ i ]\033[0m HTTP Timeout:\t\t{}".format(self.http_timeout))
+            print("{} Callback:\t\t\t{}/%host%".format(Color.orange("[ i ]"), self.callback))
+
+        print("{} HTTP Method:\t\t{}".format(Color.orange("[ i ]"), self.http_method))
+        print("{} Threads:\t\t\t{}".format(Color.orange("[ i ]"), self.max_threads))
+        print("{} HTTP Timeout:\t\t{}".format(Color.orange("[ i ]"), self.http_timeout))
 
         methods = []
 
@@ -164,23 +169,25 @@ class Config:
         if self.insertion_point_use_postparams_as_json:
             methods.append("json-post-parameters")
 
-        print("\033[33m[ i ]\033[0m Insertion points:\t\t{}".format(
+        print("{} Insertion points:\t\t{}".format(
+            Color.orange("[ i ]"),
             ", ".join(methods)
         ))
 
         if self.attack_use_exec_payload:
-            print("\033[91m[ i ]\033[0m OS command payload:\t{}".format(self.attack_exec_payload))
+            print("{} OS command payload:\t{}".format(Color.orange("[ i ]"), self.attack_exec_payload))
 
         if self.cookies.strip() != "":
-            print("\033[33m[ i ]\033[0m Cookies used:\t\t{}".format(self.cookies.strip()))
+            print("{} Cookies used:\t\t{}".format(Color.orange("[ i ]"), self.cookies.strip()))
 
         if self.headers.strip() != "":
-            print("\033[33m[ i ]\033[0m Testable headers:\t\t{}".format(
+            print("{} Testable headers:\t\t{}".format(
+                Color.orange("[ i ]"),
                 ", ".join([header for header in self.headers.splitlines()])
             ))
 
         if self.static_headers.strip() != "":
-            print("\033[33m[ i ]\033[0m Static headers:\t\t{}".format(
+            print("{} Static headers:\t\t{}".format(
+                Color.orange("[ i ]"),
                 ", ".join([header for header in self.static_headers.splitlines()])
             ))
-

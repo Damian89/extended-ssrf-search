@@ -29,6 +29,7 @@ import time
 from inc.Config import *
 from inc.Tests import *
 from inc.Worker import *
+from inc.Color import *
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
@@ -39,7 +40,8 @@ def main():
 
     tests = Tests(config).tests
 
-    print("\033[32m[ i ]\033[0m Waiting {} seconds... enough time to kill it, if thats too many requests ;)".format(
+    print("{} Waiting {} seconds... enough time to kill it, if thats too many requests ;)".format(
+        Color.green("[ i ]"),
         config.sleep_before_testing)
     )
 
@@ -49,11 +51,18 @@ def main():
 
     threads = []
 
-    for i in range(0, config.max_threads):
-        print("\033[32m[ i ]\033[0m Worker {} started...".format(i))
-        worker = Worker(config, queue_all, i)
+    for workerIterator in range(0, config.max_threads):
+        print("{} Worker {} started...".format(
+            Color.green("[ i ]"),
+            workerIterator
+        ))
+
+        worker = Worker(config, queue_all, workerIterator)
+
         worker.setDaemon(True)
+
         worker.start()
+
         threads.append(worker)
 
     for data in tests:

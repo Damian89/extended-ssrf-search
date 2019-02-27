@@ -21,6 +21,7 @@ from urllib.parse import urlparse
 from inc.Callback import *
 from inc.Headers import *
 from inc.HttpParameter import *
+from inc.Color import *
 from random import shuffle
 
 
@@ -46,36 +47,37 @@ class Tests:
 
             if self.config.insertion_point_use_path and hostname not in self.path_tested_hosts:
                 self.__create_path_testcase(url, hostname)
+
                 self.path_tested_hosts.append(hostname)
 
             if self.config.insertion_point_use_host and hostname not in self.host_tested_hosts:
                 self.__create_host_testcase(url, hostname, path, query)
+
                 self.host_tested_hosts.append(hostname)
-                pass
 
             if self.config.insertion_point_use_http_headers:
                 self.__create_http_header_testcases(url, hostname, path, query)
-                pass
 
             if self.config.insertion_point_use_getparams:
                 self.__create_getparams_testcase(url, hostname, path, query)
-                pass
 
             if self.config.insertion_point_use_postparams:
                 self.__create_postparams_testcase(url, hostname, path, query)
-                pass
 
             if self.config.insertion_point_use_postparams_as_json:
                 self.__create_postparams_json_testcase(url, hostname, path, query)
-                pass
 
         if self.config.shuffleTests:
             shuffle(self.tests)
 
-        print("\033[33m[ i ]\033[0m Request count:\t\t{}".format(len(self.tests)))
+        print("{} Request count:\t\t{}".format(
+            Color.orange("[ i ]"),
+            len(self.tests)
+        ))
         print("")
 
     def __create_postparams_json_testcase(self, url, hostname, path, query):
+
         callback = Callback(url, self.config, "dns", "default")
         callback.set_hostname(hostname)
         callback.set_testname("jpdd")
@@ -127,6 +129,7 @@ class Tests:
         })
 
     def __create_postparams_testcase(self, url, hostname, path, query):
+
         callback = Callback(url, self.config, "dns", "default")
         callback.set_hostname(hostname)
         callback.set_testname("pdd")
@@ -178,6 +181,7 @@ class Tests:
         })
 
     def __create_getparams_testcase(self, url, hostname, path, query):
+
         callback = Callback(url, self.config, "dns", "default")
         callback.set_hostname(hostname)
         callback.set_testname("gdd")
@@ -229,6 +233,7 @@ class Tests:
         })
 
     def __create_http_header_testcases(self, url, hostname, path, query):
+
         callback = Callback(url, self.config, "dns", "default")
         callback.set_hostname(hostname)
         callback.set_testname("hedd")
@@ -381,14 +386,19 @@ class Tests:
 
     @staticmethod
     def __make_url(attacked_site):
+
         url = attacked_site
+
         if not attacked_site.startswith("http"):
             url = "http://{}/".format(attacked_site)
+
         return url
 
     @staticmethod
     def __get_path(url):
+
         parser = urlparse(url)
+
         path = parser.path
 
         if path.startswith("http"):
@@ -401,10 +411,14 @@ class Tests:
 
     @staticmethod
     def __get_query(url):
+
         parser = urlparse(url)
+
         return parser.query
 
     @staticmethod
     def __get_host(url):
+
         parser = urlparse(url)
+
         return parser.hostname

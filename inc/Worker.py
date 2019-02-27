@@ -3,6 +3,7 @@
 
 import threading
 import http.client
+from inc.Color import *
 
 stopSet = True
 
@@ -43,12 +44,33 @@ class Worker(threading.Thread):
                 response = connection.getresponse()
                 connection.close()
 
+                state = self.__make_color_state(response)
 
-                print("\033[32m[ R ]\033[0m [Proc: {}] Request to {} [{}] [{}]".format(
-                    self.tid, data["url"], response.status, data["test_name"]
+                print("{} [Proc: {}] Request to {} [{}] [{}]".format(
+                    state,
+                    self.tid,
+                    data["url"],
+                    response.status,
+                    data["test_name"]
                 ))
 
             except Exception as e:
-                print("\033[31m[ x ]\033[0m [Proc: {}] [URL: {}] [{}] Error: {}".format(self.tid, data["url"], data["test_name"], e))
+                print("{} [Proc: {}] [URL: {}] [{}] Error: {}".format(
+                    Color.red("[ x ]"),
+                    self.tid,
+                    data["url"],
+                    data["test_name"],
+                    e
+                ))
 
             self.queue.task_done()
+
+    @staticmethod
+    def __make_color_state(response):
+        if response.status == 200:
+            state = Color.green("[ R ]")
+        elif 200 < response.status <= 500:
+            state = Color.orange("[ R ]")
+        else:
+            state = Color.red("[ R ]")
+        return state

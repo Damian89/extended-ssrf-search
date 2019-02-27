@@ -21,32 +21,40 @@ import random
 class Headers:
 
     def __init__(self, config):
+
         self.config = config
         self.headers = {}
 
     def add_static_headers(self):
+
         headers = self.config.static_headers.splitlines()
 
         for header_string in headers:
             name, value = header_string.split(":")
+
             self.headers[name] = value.strip()
 
     def add_user_defined_headers(self, callback):
+
         headers = self.config.headers.splitlines()
 
         for header in headers:
             self.headers[header] = callback
 
     def set(self, name, value):
+
         self.headers[name] = value
 
     def reset(self):
+
         self.headers = {}
 
     def make(self):
+
         return self.headers
 
     def get_random_user_agent(self):
+
         ua = [
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36",
             "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2227.0 Safari/537.36",
