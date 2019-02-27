@@ -1,3 +1,2 @@
 Content-Type: text/html
-Accept: text/html
-User-Agent: Mozilla/5.0 - Google Bot
+Accept: */*

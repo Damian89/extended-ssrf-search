@@ -72,6 +72,9 @@ class Tests:
         if self.config.shuffleTests:
             shuffle(self.tests)
 
+        print("\033[33m[ i ]\033[0m Request count:\t\t{}".format(len(self.tests)))
+        print("")
+
     def __create_postparams_json_testcase(self, url, hostname, path, query):
         callback = Callback(url, self.config, "dns", "default")
         callback.set_hostname(hostname)
@@ -83,6 +86,7 @@ class Tests:
         headers.add_static_headers()
         headers.set("Cookie", self.config.cookies)
         headers.set("Referer", "{}".format(url))
+        headers.set("User-Agent", headers.get_random_user_agent())
         headers.set("Content-Type", "application/json")
 
         params = HttpParameter(self.config, query, callback.result)
@@ -107,6 +111,7 @@ class Tests:
         headers.add_static_headers()
         headers.set("Cookie", self.config.cookies)
         headers.set("Referer", "{}".format(url))
+        headers.set("User-Agent", headers.get_random_user_agent())
         headers.set("Content-Type", "application/json")
 
         params = HttpParameter(self.config, query, callback.result)
@@ -132,6 +137,7 @@ class Tests:
         headers.add_static_headers()
         headers.set("Cookie", self.config.cookies)
         headers.set("Referer", "{}".format(url))
+        headers.set("User-Agent", headers.get_random_user_agent())
         headers.set("Content-Type", "application/x-www-form-urlencoded")
 
         params = HttpParameter(self.config, query, callback.result)
@@ -156,6 +162,7 @@ class Tests:
         headers.add_static_headers()
         headers.set("Cookie", self.config.cookies)
         headers.set("Referer", "{}".format(url))
+        headers.set("User-Agent", headers.get_random_user_agent())
         headers.set("Content-Type", "application/x-www-form-urlencoded")
 
         params = HttpParameter(self.config, query, callback.result)
@@ -173,7 +180,7 @@ class Tests:
     def __create_getparams_testcase(self, url, hostname, path, query):
         callback = Callback(url, self.config, "dns", "default")
         callback.set_hostname(hostname)
-        callback.set_testname("gdp")
+        callback.set_testname("gdd")
         callback.make()
 
         headers = Headers(self.config)
@@ -181,6 +188,7 @@ class Tests:
         headers.add_static_headers()
         headers.set("Cookie", self.config.cookies)
         headers.set("Referer", "{}".format(url))
+        headers.set("User-Agent", headers.get_random_user_agent())
         headers.set("Content-Type", "text/html")
 
         params = HttpParameter(self.config, query, callback.result)
@@ -197,7 +205,7 @@ class Tests:
 
         callback = Callback(url, self.config, "http", "default")
         callback.set_hostname(hostname)
-        callback.set_testname("ghp")
+        callback.set_testname("ghd")
         callback.make()
 
         headers = Headers(self.config)
@@ -205,6 +213,7 @@ class Tests:
         headers.add_static_headers()
         headers.set("Cookie", self.config.cookies)
         headers.set("Referer", "{}".format(url))
+        headers.set("User-Agent", headers.get_random_user_agent())
         headers.set("Content-Type", "text/html")
 
         params = HttpParameter(self.config, query, callback.result)
@@ -222,7 +231,7 @@ class Tests:
     def __create_http_header_testcases(self, url, hostname, path, query):
         callback = Callback(url, self.config, "dns", "default")
         callback.set_hostname(hostname)
-        callback.set_testname("hdf")
+        callback.set_testname("hedd")
         callback.make()
 
         headers = Headers(self.config)
@@ -230,6 +239,7 @@ class Tests:
         headers.add_static_headers()
         headers.set("Cookie", self.config.cookies)
         headers.set("Referer", "{}{}?{}".format(url, path, query))
+        headers.set("User-Agent", headers.get_random_user_agent())
         headers.set("Content-Type", "text/html")
         headers.add_user_defined_headers(callback.result)
 
@@ -245,7 +255,7 @@ class Tests:
 
         callback = Callback(url, self.config, "http", "default")
         callback.set_hostname(hostname)
-        callback.set_testname("hhd")
+        callback.set_testname("hthd")
         callback.make()
 
         headers = Headers(self.config)
@@ -253,6 +263,7 @@ class Tests:
         headers.add_static_headers()
         headers.set("Cookie", self.config.cookies)
         headers.set("Referer", "{}{}?{}".format(url, path, query))
+        headers.set("User-Agent", headers.get_random_user_agent())
         headers.set("Content-Type", "text/html")
         headers.add_user_defined_headers(callback.result)
 
@@ -266,6 +277,31 @@ class Tests:
             'test_name': "headers_http_default"
         })
 
+        if self.config.attack_use_exec_payload:
+            callback = Callback(url, self.config, "dns", "exec")
+            callback.set_hostname(hostname)
+            callback.set_testname("hede")
+            callback.make()
+
+            headers = Headers(self.config)
+            headers.set("Host", hostname)
+            headers.add_static_headers()
+            headers.set("Cookie", self.config.cookies)
+            headers.set("Referer", "{}{}?{}".format(url, path, query))
+            headers.set("User-Agent", headers.get_random_user_agent())
+            headers.set("Content-Type", "text/html")
+            headers.add_user_defined_headers(callback.result)
+
+            self.tests.append({
+                'url': url,
+                'method': self.config.http_method,
+                'host': hostname,
+                'path': "{}?{}".format(path, query),
+                'headers': headers.make(),
+                'body': '',
+                'test_name': "headers_dns_exec"
+            })
+
     def __create_host_testcase(self, url, hostname, path, query):
 
         callback = Callback(url, self.config, "dns", "default")
@@ -278,6 +314,7 @@ class Tests:
         headers.add_static_headers()
         headers.set("Cookie", self.config.cookies)
         headers.set("Referer", "{}{}?{}".format(url, path, query))
+        headers.set("User-Agent", headers.get_random_user_agent())
         headers.set("Content-Type", "text/html")
 
         self.tests.append({
@@ -301,6 +338,7 @@ class Tests:
             headers.add_static_headers()
             headers.set("Cookie", self.config.cookies)
             headers.set("Referer", "{}{}?{}".format(url, path, query))
+            headers.set("User-Agent", headers.get_random_user_agent())
             headers.set("Content-Type", "text/html")
             headers.set("Host", callback.result)
 
@@ -327,6 +365,7 @@ class Tests:
         headers.add_static_headers()
         headers.set("Cookie", self.config.cookies)
         headers.set("Referer", "{}".format(url))
+        headers.set("User-Agent", headers.get_random_user_agent())
         headers.set("Content-Type", "text/html")
         headers.set("Host", hostname)
 
@@ -350,6 +389,14 @@ class Tests:
     @staticmethod
     def __get_path(url):
         parser = urlparse(url)
+        path = parser.path
+
+        if path.startswith("http"):
+            return path
+
+        if not path.startswith("/"):
+            return "/" + path
+
         return parser.path
 
     @staticmethod

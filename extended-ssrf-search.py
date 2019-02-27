@@ -35,13 +35,12 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 def main():
     config = Config()
+    config.show_summary()
+
     tests = Tests(config).tests
 
-    print("Requests to be made: {}".format(len(tests)))
-    print(
-        "Waiting {} seconds... enough time to kill it, if thats too many requests ;)".format(
-            config.sleep_before_testing
-        )
+    print("\033[32m[ i ]\033[0m Waiting {} seconds... enough time to kill it, if thats too many requests ;)".format(
+        config.sleep_before_testing)
     )
 
     time.sleep(config.sleep_before_testing)

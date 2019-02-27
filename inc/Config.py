@@ -64,8 +64,6 @@ class Config:
 
     def __get_cookies(self):
 
-        print("Starting to prepare cookies")
-
         file = self.config["files"]["Cookies"]
 
         if not os.path.exists(file):
@@ -78,8 +76,6 @@ class Config:
         self.cookies = cookies
 
     def __get_parameters(self):
-
-        print("Starting to prepare parameters...")
 
         file = self.config["files"]["Parameters"]
 
@@ -97,8 +93,6 @@ class Config:
 
     def __get_http_headers(self):
 
-        print("Starting to prepare headers...")
-
         file = self.config["files"]["HttpHeaders"]
 
         if not os.path.exists(file):
@@ -114,8 +108,6 @@ class Config:
         self.headers = headers
 
     def __get_static_headers(self):
-
-        print("Starting to prepare static headers...")
 
         file = self.config["files"]["StaticHeaders"]
 
@@ -142,3 +134,53 @@ class Config:
             sys.exit("Url list seems to be empty!")
 
         self.urls = urls.splitlines()
+
+    def show_summary(self):
+        if self.identifier_position == "prepend":
+            print("\033[33m[ i ]\033[0m Callback:\t\t\t%host%.{}".format(self.callback))
+        else:
+            print("\033[33m[ i ]\033[0m Callback:\t\t\t{}/%host%".format(self.callback))
+        print("\033[33m[ i ]\033[0m HTTP Method:\t\t{}".format(self.http_method))
+        print("\033[33m[ i ]\033[0m Threads:\t\t\t{}".format(self.max_threads))
+        print("\033[33m[ i ]\033[0m HTTP Timeout:\t\t{}".format(self.http_timeout))
+
+        methods = []
+
+        if self.insertion_point_use_path:
+            methods.append("path")
+
+        if self.insertion_point_use_host:
+            methods.append("host")
+
+        if self.insertion_point_use_http_headers:
+            methods.append("headers")
+
+        if self.insertion_point_use_getparams:
+            methods.append("get-parameters")
+
+        if self.insertion_point_use_postparams:
+            methods.append("form-post-parameters")
+
+        if self.insertion_point_use_postparams_as_json:
+            methods.append("json-post-parameters")
+
+        print("\033[33m[ i ]\033[0m Insertion points:\t\t{}".format(
+            ", ".join(methods)
+        ))
+
+        if self.attack_use_exec_payload:
+            print("\033[91m[ i ]\033[0m OS command payload:\t{}".format(self.attack_exec_payload))
+
+        if self.cookies.strip() != "":
+            print("\033[33m[ i ]\033[0m Cookies used:\t\t{}".format(self.cookies.strip()))
+
+        if self.headers.strip() != "":
+            print("\033[33m[ i ]\033[0m Testable headers:\t\t{}".format(
+                ", ".join([header for header in self.headers.splitlines()])
+            ))
+
+        if self.static_headers.strip() != "":
+            print("\033[33m[ i ]\033[0m Static headers:\t\t{}".format(
+                ", ".join([header for header in self.static_headers.splitlines()])
+            ))
+
