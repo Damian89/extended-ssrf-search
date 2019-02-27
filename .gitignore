@@ -1,0 +1,5 @@
+.git
+.idea
+venv
+app-settings.conf
+config.live
