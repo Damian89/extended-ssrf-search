@@ -3,3 +3,13 @@ HTTP_CLIENT_IP
 HTTP_FORWARDED_FOR
 HTTP_X_FORWARDED
 HTTP_X_FORWARDED_FOR
+X-Originating-IP
+X-Forwarded-For
+X-Remote-IP
+X-Remote-Addr
+X-Client-IP
+WL-Proxy-Client-IP
+Z-Forwarded-For
+Source-IP
+True-Client-IP
+X-Real-IP
