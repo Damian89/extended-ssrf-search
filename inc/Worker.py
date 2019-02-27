@@ -35,7 +35,7 @@ class Worker(threading.Thread):
                     connection = http.client.HTTPConnection(data["host"], 80, timeout=self.config.http_timeout)
 
                 connection.request(
-                    data["method"],
+                    data["method"].upper(),
                     data["path"],
                     data["body"],
                     data["headers"]
