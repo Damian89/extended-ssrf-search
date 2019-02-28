@@ -24,6 +24,10 @@ class Color:
         return "\033[31m{}\033[0m".format(text)
 
     @staticmethod
+    def danger(text):
+        return "\033[41m{}\033[94m\033[0m".format(text)
+
+    @staticmethod
     def green(text):
         return "\033[32m{}\033[0m".format(text)
 

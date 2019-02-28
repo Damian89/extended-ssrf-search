@@ -4,7 +4,7 @@
 import threading
 import http.client
 from inc.Color import *
-
+from inc.Connection import Connection as OwnConnection
 stopSet = True
 
 
@@ -30,19 +30,24 @@ class Worker(threading.Thread):
 
             try:
 
-                if "https" in data["url"]:
-                    connection = http.client.HTTPSConnection(data["host"], 443, timeout=self.config.http_timeout)
-                else:
-                    connection = http.client.HTTPConnection(data["host"], 80, timeout=self.config.http_timeout)
+                conn = OwnConnection(self.config, data)
+                conn.connect()
+                response = conn.response
 
-                connection.request(
-                    data["method"].upper(),
-                    data["path"],
-                    data["body"],
-                    data["headers"]
-                )
-                response = connection.getresponse()
-                connection.close()
+                # if "https" in data["url"]:
+                #     connection = http.client.HTTPSConnection("127.0.0.1", 8080, timeout=self.config.http_timeout)
+                # else:
+                #     connection = http.client.HTTPConnection("127.0.0.1", 8080, timeout=self.config.http_timeout)
+                #
+                # connection.set_tunnel(data["host"])
+                # connection.request(
+                #     data["method"].upper(),
+                #     data["path"],
+                #     data["body"],
+                #     data["headers"]
+                # )
+                # response = connection.getresponse()
+                # connection.close()
 
                 state = self.__make_color_state(response)
 
@@ -56,7 +61,7 @@ class Worker(threading.Thread):
 
             except Exception as e:
                 print("{} [Proc: {}] {} [{}] [{}]".format(
-                    Color.red("[ x ]"),
+                    Color.danger("[ x ]"),
                     self.tid,
                     data["url"],
                     data["test_name"],

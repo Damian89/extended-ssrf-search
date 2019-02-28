@@ -64,6 +64,10 @@ class Config:
         self.attack_exec_payload = self.config["attacks"]["ExecPayload"]
         self.identifier_position = self.config["identifier"]["Position"]
 
+        # Tunneling
+        self.tunneling = self.config.getboolean("tunneling", "Active")
+        self.tunnel = self.config["tunneling"]["Tunnel"]
+
     def __get_cookies(self):
 
         file = self.config["files"]["Cookies"]
@@ -123,7 +127,7 @@ class Config:
         self.static_headers = static_headers
 
     def __get_urls(self):
-        
+
         file = self.config["files"]["Urls"]
 
         if not os.path.exists(file):
@@ -173,6 +177,13 @@ class Config:
             Color.orange("[ i ]"),
             ", ".join(methods)
         ))
+
+        if self.tunneling:
+            print("{} Proxy server:\t\t{} [{}]".format(
+                Color.orange("[ i ]"),
+                self.tunnel,
+                Color.danger("Attention: this works currently ONLY with http connections, SSL is not supported")
+            ))
 
         if self.attack_use_exec_payload:
             print("{} OS command payload:\t{}".format(Color.orange("[ i ]"), self.attack_exec_payload))
