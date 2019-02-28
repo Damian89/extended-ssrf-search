@@ -50,17 +50,18 @@ class Connection:
 
         connection.close()
 
-    """
-        Sometimes we want to tunnel our requests trough burp - but this seems to be only possible when we are dealing
-        with non-SSL connections. HTTPS will often result in a 301 or CONNECT FAIL. But its nice to see what kind of
-        connection is established and alter that in Burp. So we will keep that.
-    """
-
     def __tunneled_connection(self):
 
-        connection = http.client.HTTPConnection(self.config.tunnel, timeout=self.config.http_timeout)
+        if "https" in self.data["url"]:
+            connection = http.client.HTTPSConnection(self.config.tunnel, timeout=self.config.http_timeout)
+        else:
+            connection = http.client.HTTPConnection(self.config.tunnel, timeout=self.config.http_timeout)
 
-        connection.set_tunnel(self.data["host"])
+        if "https" in self.data["url"]:
+            connection.set_tunnel(self.data["host"], 443)
+        else:
+            connection.set_tunnel(self.data["host"])
+
         connection.request(
             self.data["method"].upper(),
             self.data["path"],

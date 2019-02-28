@@ -179,10 +179,9 @@ class Config:
         ))
 
         if self.tunneling:
-            print("{} Proxy server:\t\t{} [{}]".format(
+            print("{} Proxy server:\t\t{}".format(
                 Color.orange("[ i ]"),
-                self.tunnel,
-                Color.danger("Attention: this works currently ONLY with http connections, SSL is not supported")
+                self.tunnel
             ))
 
         if self.attack_use_exec_payload:

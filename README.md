@@ -204,9 +204,7 @@ http://www.attacked-domain.com-testmethod.burpcollaborator.net/
 
 #### Tunneling
 
-Its also possible to use a tunnel, e.g. "127.0.0.1:8080" (Burp Proxy), to monitor all traffic within Burp. But you have to me 
-careful! This only works for HTTP Connections - HTTPS will result in a connect error OR 301 (mostly this!), because a lot of
-sites redirect http traffic to https automatically.
+Its also possible to use a tunnel, e.g. "127.0.0.1:8080" (Burp Proxy), to monitor all traffic within Burp.
 
 __Active__
 
@@ -218,11 +216,11 @@ Set here your proxy server "ip:port".
 
 The result is the following one, when you open Burp you can watch your http history:
 
-![Screen](https://i.imgur.com/xLwyAUx.png)
+![Screen](https://i.imgur.com/3r8hSL7.png)
 
 ## Screenshot
 
-![Screen](https://i.imgur.com/volrC1B.png)
+![Screen](https://i.imgur.com/xNLEN9i.png)
 
 ## Feature requests
 
