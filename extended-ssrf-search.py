@@ -38,7 +38,15 @@ def main():
     config = Config()
     config.show_summary()
 
+    print("{} Starting to prepare tests...".format(
+        Color.green("[ i ]")
+    ))
+
     tests = Tests(config).tests
+
+    print("{} Finished preparing...".format(
+        Color.green("[ i ]")
+    ))
 
     print("{} Waiting {} seconds... enough time to kill it, if thats too many requests ;)".format(
         Color.green("[ i ]"),
