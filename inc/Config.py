@@ -20,6 +20,7 @@ import configparser
 import os
 import sys
 from inc.Color import *
+from inc.Clean import *
 
 
 class Config:
@@ -140,7 +141,14 @@ class Config:
         if len(urls) == 0:
             sys.exit("Url list seems to be empty!")
 
-        self.urls = urls.splitlines()
+        urls = urls.splitlines()
+
+        self.original_url_count = len(urls)
+
+        url_cleaner = Clean(urls)
+        url_cleaner.clean()
+        self.urls = url_cleaner.cleaned_urls
+        self.cleaned_url_count = len(self.urls)
 
     def show_summary(self):
 
@@ -190,7 +198,7 @@ class Config:
         if self.cookies.strip() != "":
             print("{} Cookies used:\t\t{}".format(Color.orange("[ i ]"), self.cookies.strip()))
 
-        if self.headers.strip() != "":
+        if self.insertion_point_use_http_headers and self.headers.strip() != "":
             print("{} Testable headers:\t\t{}".format(
                 Color.orange("[ i ]"),
                 ", ".join([header for header in self.headers.splitlines()])
@@ -201,3 +209,13 @@ class Config:
                 Color.orange("[ i ]"),
                 ", ".join([header for header in self.static_headers.splitlines()])
             ))
+
+        print("{} Initial url count:\t{}".format(
+            Color.orange("[ i ]"),
+            self.original_url_count
+        ))
+
+        print("{} Cleaned url count:\t{}".format(
+            Color.orange("[ i ]"),
+            self.cleaned_url_count
+        ))

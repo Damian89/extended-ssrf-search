@@ -34,10 +34,12 @@ class Connection:
 
     def __regular_connection(self):
 
+        port = self.__get_port()
+
         if "https" in self.data["url"]:
-            connection = http.client.HTTPSConnection(self.data["host"], 443, timeout=self.config.http_timeout)
+            connection = http.client.HTTPSConnection(self.data["host"], port, timeout=self.config.http_timeout)
         else:
-            connection = http.client.HTTPConnection(self.data["host"], 80, timeout=self.config.http_timeout)
+            connection = http.client.HTTPConnection(self.data["host"], port, timeout=self.config.http_timeout)
 
         connection.request(
             self.data["method"].upper(),
@@ -57,18 +59,30 @@ class Connection:
         else:
             connection = http.client.HTTPConnection(self.config.tunnel, timeout=self.config.http_timeout)
 
-        if "https" in self.data["url"]:
-            connection.set_tunnel(self.data["host"], 443)
-        else:
-            connection.set_tunnel(self.data["host"])
+        port = self.__get_port()
+
+        connection.set_tunnel(self.data["host"], port)
+
+        body = self.data["body"]
+
+        if self.data["body"].strip() == "":
+            body = None
 
         connection.request(
             self.data["method"].upper(),
             self.data["path"],
-            self.data["body"],
+            body,
             self.data["headers"]
         )
 
         self.response = connection.getresponse()
 
         connection.close()
+
+    def __get_port(self):
+        port = self.data["port"]
+        if port is None and "https" in self.data["url"]:
+            port = 443
+        if port is None and "http" in self.data["url"]:
+            port = 80
+        return port

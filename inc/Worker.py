@@ -34,21 +34,6 @@ class Worker(threading.Thread):
                 conn.connect()
                 response = conn.response
 
-                # if "https" in data["url"]:
-                #     connection = http.client.HTTPSConnection("127.0.0.1", 8080, timeout=self.config.http_timeout)
-                # else:
-                #     connection = http.client.HTTPConnection("127.0.0.1", 8080, timeout=self.config.http_timeout)
-                #
-                # connection.set_tunnel(data["host"])
-                # connection.request(
-                #     data["method"].upper(),
-                #     data["path"],
-                #     data["body"],
-                #     data["headers"]
-                # )
-                # response = connection.getresponse()
-                # connection.close()
-
                 state = self.__make_color_state(response)
 
                 print("{} [Proc: {}] {} [{}] [{}]".format(

@@ -44,28 +44,29 @@ class Tests:
             path = self.__get_path(url)
             query = self.__get_query(url)
             hostname = self.__get_host(url)
+            port = self.__get_port(url)
 
             if self.config.insertion_point_use_path and hostname not in self.path_tested_hosts:
-                self.__create_path_testcase(url, hostname)
+                self.__create_path_testcase(url, hostname, port)
 
                 self.path_tested_hosts.append(hostname)
 
             if self.config.insertion_point_use_host and hostname not in self.host_tested_hosts:
-                self.__create_host_testcase(url, hostname, path, query)
+                self.__create_host_testcase(url, hostname, port, path, query)
 
                 self.host_tested_hosts.append(hostname)
 
             if self.config.insertion_point_use_http_headers:
-                self.__create_http_header_testcases(url, hostname, path, query)
+                self.__create_http_header_testcases(url, hostname, port, path, query)
 
             if self.config.insertion_point_use_getparams:
-                self.__create_getparams_testcase(url, hostname, path, query)
+                self.__create_getparams_testcase(url, hostname, port, path, query)
 
             if self.config.insertion_point_use_postparams:
-                self.__create_postparams_testcase(url, hostname, path, query)
+                self.__create_postparams_testcase(url, hostname, port, path, query)
 
             if self.config.insertion_point_use_postparams_as_json:
-                self.__create_postparams_json_testcase(url, hostname, path, query)
+                self.__create_postparams_json_testcase(url, hostname, port, path, query)
 
         if self.config.shuffleTests:
             shuffle(self.tests)
@@ -76,7 +77,12 @@ class Tests:
         ))
         print("")
 
-    def __create_postparams_json_testcase(self, url, hostname, path, query):
+    def __create_postparams_json_testcase(self, url, hostname, port, path, query):
+
+        real_path = "{}?{}".format(path, query)
+
+        if query == "":
+            real_path = "{}".format(path)
 
         callback = Callback(url, self.config, "dns", "default")
         callback.set_hostname(hostname)
@@ -95,9 +101,10 @@ class Tests:
 
         self.tests.append({
             'url': url,
+            'port': port,
             'method': 'POST',
             'host': hostname,
-            'path': "{}?{}".format(path, query),
+            'path': real_path,
             'headers': headers.make(),
             'body': params.combine_as_json(),
             'test_name': "json_post_dns_default"
@@ -120,15 +127,16 @@ class Tests:
 
         self.tests.append({
             'url': url,
+            'port': port,
             'method': 'POST',
             'host': hostname,
-            'path': "{}".format(path),
+            'path': real_path,
             'headers': headers.make(),
             'body': params.combine_as_json(),
             'test_name': "json_post_http_default"
         })
 
-    def __create_postparams_testcase(self, url, hostname, path, query):
+    def __create_postparams_testcase(self, url, hostname, port, path, query):
 
         callback = Callback(url, self.config, "dns", "default")
         callback.set_hostname(hostname)
@@ -147,6 +155,7 @@ class Tests:
 
         self.tests.append({
             'url': url,
+            'port': port,
             'method': 'POST',
             'host': hostname,
             'path': "{}?{}".format(path, query),
@@ -172,6 +181,7 @@ class Tests:
 
         self.tests.append({
             'url': url,
+            'port': port,
             'method': 'POST',
             'host': hostname,
             'path': "{}?{}".format(path, query),
@@ -180,7 +190,7 @@ class Tests:
             'test_name': "post_http_default"
         })
 
-    def __create_getparams_testcase(self, url, hostname, path, query):
+    def __create_getparams_testcase(self, url, hostname, port, path, query):
 
         callback = Callback(url, self.config, "dns", "default")
         callback.set_hostname(hostname)
@@ -199,6 +209,7 @@ class Tests:
 
         self.tests.append({
             'url': url,
+            'port': port,
             'method': 'GET',
             'host': hostname,
             'path': "{}?{}".format(path, params.combine_for_get()),
@@ -224,6 +235,7 @@ class Tests:
 
         self.tests.append({
             'url': url,
+            'port': port,
             'method': 'GET',
             'host': hostname,
             'path': "{}?{}".format(path, params.combine_for_get()),
@@ -232,7 +244,7 @@ class Tests:
             'test_name': "get_http_default"
         })
 
-    def __create_http_header_testcases(self, url, hostname, path, query):
+    def __create_http_header_testcases(self, url, hostname, port, path, query):
 
         callback = Callback(url, self.config, "dns", "default")
         callback.set_hostname(hostname)
@@ -250,6 +262,7 @@ class Tests:
 
         self.tests.append({
             'url': url,
+            'port': port,
             'method': self.config.http_method,
             'host': hostname,
             'path': "{}?{}".format(path, query),
@@ -274,6 +287,7 @@ class Tests:
 
         self.tests.append({
             'url': url,
+            'port': port,
             'method': self.config.http_method,
             'host': hostname,
             'path': "{}?{}".format(path, query),
@@ -299,6 +313,7 @@ class Tests:
 
             self.tests.append({
                 'url': url,
+                'port': port,
                 'method': self.config.http_method,
                 'host': hostname,
                 'path': "{}?{}".format(path, query),
@@ -307,7 +322,7 @@ class Tests:
                 'test_name': "headers_dns_exec"
             })
 
-    def __create_host_testcase(self, url, hostname, path, query):
+    def __create_host_testcase(self, url, hostname, port, path, query):
 
         callback = Callback(url, self.config, "dns", "default")
         callback.set_hostname(hostname)
@@ -324,6 +339,7 @@ class Tests:
 
         self.tests.append({
             'url': url,
+            'port': port,
             'method': self.config.http_method,
             'host': hostname,
             'path': "{}?{}".format(path, query),
@@ -349,6 +365,7 @@ class Tests:
 
             self.tests.append({
                 'url': url,
+                'port': port,
                 'method': self.config.http_method,
                 'host': hostname,
                 'path': "{}?{}".format(path, query),
@@ -357,7 +374,7 @@ class Tests:
                 'test_name': "host_dns_exec"
             })
 
-    def __create_path_testcase(self, url, hostname):
+    def __create_path_testcase(self, url, hostname, port):
 
         callback = Callback(url, self.config, "http", "default")
         callback.set_hostname(hostname)
@@ -376,6 +393,7 @@ class Tests:
 
         self.tests.append({
             'url': url,
+            'port': port,
             'method': self.config.http_method,
             'host': hostname,
             'path': callback.result,
@@ -422,3 +440,10 @@ class Tests:
         parser = urlparse(url)
 
         return parser.hostname
+
+    @staticmethod
+    def __get_port(url):
+
+        parser = urlparse(url)
+
+        return parser.port
