@@ -7,7 +7,7 @@ This tool search for SSRF using predefined settings in different parts of a requ
 Rename __example.app-setting.conf__ to __app-setting.conf__ and adjust settings. The most important setting is the callback url. I 
 recommend to use burp collaborator.
 Then you can add your urls to config/url-to-test.txt. Here the script accepts domains as well as urls with path and queryparameters.
-If you like you can add add your own cookies to config/cookie-jar.txt and add additional headers for your requests. The brute force list
+If you like you can add your own cookies to config/cookie-jar.txt and add additional headers for your requests. The brute force list
 which is used in post and get requests is currently small, I dont thing adding 2000 parameters is smart. We should focus on those
 which have the highest possibility to be vulnerable. If you don't think so: just add your own!
 
@@ -62,7 +62,7 @@ add your cookies.
 
 ### Settings
 
-The app-settings.conf defined the program workflow. Its the most important file, you can activate/deactive different
+The app-settings.conf defines the program workflow. Its the most important file, you can activate/deactive different
 modules there.
 
 #### Basic settings
@@ -224,9 +224,9 @@ The result is the following one, when you open Burp you can watch your http hist
 
 ## Feature requests
 
-Plase just create an issue and tag it as a feature request.
+Please just create an issue and tag it as a feature request.
 
 ## Don't share!
 
-I don't want that tool to be private currently. So be cool and don't share. If you have access to it, that means I like you,
+Currently, I want that tool to be private. So be cool and don't share. If you have access to it, that means I like you,
 learnt something from you (and want giving back) or you helped me a lot.
