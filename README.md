@@ -4,7 +4,7 @@ This tool search for SSRF using predefined settings in different parts of a requ
 
 ## First step
 
-Rename __example.app-setting.conf__ to __app-setting.conf__ and adjust settings. The most important setting is the callback url. I 
+Rename __example.app-settings.conf__ to __app-settings.conf__ and adjust settings. The most important setting is the callback url. I 
 recommend to use burp collaborator.
 Then you can add your urls to config/url-to-test.txt. Here the script accepts domains as well as urls with path and queryparameters.
 If you like you can add your own cookies to config/cookie-jar.txt and add additional headers for your requests. The brute force list
