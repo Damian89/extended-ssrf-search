@@ -226,7 +226,9 @@ The result is the following one, when you open Burp you can watch your http hist
 
 Please just create an issue and tag it as a feature request.
 
-## Don't share!
+## Support
 
-Currently, I want that tool to be private. So be cool and don't share. If you have access to it, that means I like you,
-learnt something from you (and want giving back) or you helped me a lot.
+Do you like that tool? Did it help you to get a bounty? Want to give something back/support me? Why not!<br />
+
+#### Donate via PayPal: <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PPHDNEJWY5UXJ&source=url">CLICK</a>
+
