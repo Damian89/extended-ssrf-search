@@ -93,6 +93,9 @@ __ShuffleTests__
 Especially when dealing with a BIG list of urls having this set to "true" will shuffle all created tests. That way the same host 
 will not get hit that much. If you scan just one host, than it doesn't matter.
 
+__GetChunkSize__
+
+When working with bigger param lists this might be handy and prevent 400 too large entity errors.
 
 #### Insertion points
 

@@ -52,6 +52,27 @@ class HttpParameter:
 
         return json.dumps(jsonA, ensure_ascii=True)
 
+    def get_data_for_get_in_chunks(self):
+        start = 0
+        query = []
+        chunked = []
+
+        for data in self.finale_query_parts:
+
+            start = start +1
+
+            query.append("{}={}".format(data["param"], data["callback"]))
+
+            if start == self.config.chunk_size_get:
+                chunked.append("&".join(query))
+                query = []
+                start = 0
+
+        if len(query)>0:
+            chunked.append("&".join(query))
+
+        return chunked
+
     def __make_combinations(self, callback):
 
         for param in self.params:

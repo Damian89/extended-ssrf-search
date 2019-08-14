@@ -207,16 +207,18 @@ class Tests:
 
         params = HttpParameter(self.config, query, callback.result)
 
-        self.tests.append({
-            'url': url,
-            'port': port,
-            'method': 'GET',
-            'host': hostname,
-            'path': "{}?{}".format(path, params.combine_for_get()),
-            'headers': headers.make(),
-            'body': '',
-            'test_name': "get_dns_default"
-        })
+        for paramset in params.get_data_for_get_in_chunks():
+            self.tests.append({
+                'url': url,
+                'port': port,
+                'method': 'GET',
+                'host': hostname,
+                'path': "{}?{}".format(path, paramset),
+                'headers': headers.make(),
+                'body': '',
+                'test_name': "get_dns_default"
+            })
+
 
         callback = Callback(url, self.config, "http", "default")
         callback.set_hostname(hostname)
@@ -233,16 +235,17 @@ class Tests:
 
         params = HttpParameter(self.config, query, callback.result)
 
-        self.tests.append({
-            'url': url,
-            'port': port,
-            'method': 'GET',
-            'host': hostname,
-            'path': "{}?{}".format(path, params.combine_for_get()),
-            'headers': headers.make(),
-            'body': '',
-            'test_name': "get_http_default"
-        })
+        for paramset in params.get_data_for_get_in_chunks():
+            self.tests.append({
+                'url': url,
+                'port': port,
+                'method': 'GET',
+                'host': hostname,
+                'path': "{}?{}".format(path, paramset),
+                'headers': headers.make(),
+                'body': '',
+                'test_name': "get_http_default"
+            })
 
     def __create_http_header_testcases(self, url, hostname, port, path, query):
 

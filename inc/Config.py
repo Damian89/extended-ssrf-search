@@ -51,6 +51,7 @@ class Config:
         self.max_threads = int(self.config["default"]["MaxThreads"])
         self.shuffleTests = self.config.getboolean("default", "ShuffleTests")
         self.sleep_before_testing = int(self.config["default"]["SleepBeforeTesting"])
+        self.chunk_size_get = int(self.config["default"]["GetChunkSize"])
 
         # Settings regarding insertion points
         self.insertion_point_use_path = self.config.getboolean("insertion-points", "InPath")
