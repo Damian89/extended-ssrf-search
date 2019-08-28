@@ -30,7 +30,7 @@ class Headers:
         headers = self.config.static_headers.splitlines()
 
         for header_string in headers:
-            name, value = header_string.split(":")
+            name, value = header_string.split(":")[0], header_string.split(":")[1]
 
             self.headers[name] = value.strip()
 
